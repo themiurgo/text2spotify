@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Text2Spotify</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type='text/javascript' src='text2spotify.js'></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <style>
+      textarea
+    {
+    width:100%;
+    }
+      .boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <h1>Text2Spotify</h1>
+        <p>Convert a textual list of songs into a list of Spotify tracks.</p>
+      </div>
+      <div class="row-fluid">
+        <div>
+          <form class="boxsizingBorder">
+            <textarea class="form-control boxsizingBorder" id="tracks-text"></textarea>
+          </form>
+        </div>
+        <button type="button" class="btn btn-default" id="convert">Convert</button>
+          <a id="playlist" class="btn disabled">Get the Playlist!</a>
+      </div>
+    </div>
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
