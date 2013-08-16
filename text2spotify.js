@@ -17,14 +17,14 @@ function convert(query) {
     url: "http://ws.spotify.com/search/1/track.json?q=" + query,
     dataType: "json",
     success: function(response) {
-        //trackIds.push(response['tracks'][0]['href']);
-        //return setTimeout(function() {
-          track = response['tracks'][0]['href'].split(":");
-          track = track[track.length-1]
-          console.log(track);
-          var href = $("#playlist").attr("href");
-          $("#playlist").attr("href", href+track+",");
-        //});
+      tracks = response['tracks'];
+      if (tracks.length > 0) {
+        track = tracks[0]['href'].split(":");
+        track = track[track.length-1]
+        console.log(track);
+        var href = $("#playlist").attr("href");
+        $("#playlist").attr("href", href+track+",");
+      }
     },
     error: function(e) {
          alert('Error121212: ' + e);
@@ -34,7 +34,8 @@ function convert(query) {
 
 function convertAll() {
     // Read source and create empty output
-    $("#playlist").attr("href", URL)
+    $("#playlist").attr("href", URL).addClass("disabled");
+    $("#convert").text("Converting...").addClass("disabled");
     var tracksText = $('#tracks-text').val().trim().split("\n");
     var calls = [];
     var trackIds = []
@@ -42,32 +43,15 @@ function convertAll() {
     // Convert each song
     var length = $(tracksText).length
     $(tracksText).each(function (index, track) {
-      //return convert(track);
-      calls.push($.ajax({
-        type: "GET",
-        url: "http://ws.spotify.com/search/1/track.json?q=" + track,
-        dataType: "json",
-        success: function(response) {
-            //trackIds.push(response['tracks'][0]['href']);
-            //return setTimeout(function() {
-              track = response['tracks'][0]['href'].split(":");
-              track = track[track.length-1]
-              console.log(track);
-              var href = $("#playlist").attr("href");
-              $("#playlist").attr("href", href+track+",");
-            //});
-        },
-        error: function(e) {
-             alert('Error121212: ' + e);
-        }
-      }));
-   });
-
-    $.when.apply($, calls).then(function() {
-      console.log("Done");
+      wait(index * DELAY).then(function() {
+        convert(track);
+      });
     });
 
-    $('#playlist').removeClass("disabled");
+    wait(length * DELAY).then(function() {
+      $('#playlist').removeClass("disabled");
+      $('#convert').text("Convert").removeClass("disabled");
+    });
 }
 
 // Main
