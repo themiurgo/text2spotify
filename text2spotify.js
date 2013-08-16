@@ -38,10 +38,11 @@ function convertAll() {
     $("#convert").text("Converting...").addClass("disabled");
     var tracksText = $('#tracks-text').val().trim().split("\n");
     var calls = [];
-    var trackIds = []
+    var trackIds = [];
 
     // Convert each song
-    var length = $(tracksText).length
+    var length = $(tracksText).length;
+    var lastcall;
     $(tracksText).each(function (index, track) {
       wait(index * DELAY).then(function() {
         convert(track);
@@ -51,6 +52,11 @@ function convertAll() {
     wait(length * DELAY).then(function() {
       $('#playlist').removeClass("disabled");
       $('#convert').text("Convert").removeClass("disabled");
+    });
+
+    wait(length*DELAY).then(function() {
+      console.log("Done");
+      $('#playlist').removeClass("disabled");
     });
 }
 
